@@ -1,0 +1,24 @@
+<div class="container mt-4 bg-dark text-white p-5 rounded">
+  <h1 class="display-4 text-info"><%= @api_entry.api_name %></h1>
+  <p class="text-light"><strong>Description:</strong> <%= @api_entry.description %></p>
+  <p class="text-light"><strong>Link:</strong> <%= link_to @api_entry.link, @api_entry.link, target: "_blank", class: "text-warning" %></p>
+  <p class="text-light"><strong>Auth:</strong> <%= @api_entry.auth.present? ? @api_entry.auth : 'None' %></p>
+  <p class="text-light"><strong>HTTPS:</strong> <%= @api_entry.https ? 'Yes' : 'No' %></p>
+  <p class="text-light"><strong>CORS:</strong> <%= @api_entry.cors %></p>
+  <p class="text-light"><strong>Category:</strong> <%= @api_entry.category.name %></p>
+
+  <h2 class="text-info mt-4">User Reviews</h2>
+  <% if @api_entry.faker_data.exists? %> <%# Correct opening if statement %>
+  <% @api_entry.faker_data.each do |review| %> <%# Correct opening each statement %>
+    <div class="border border-light rounded p-3 mb-3">
+      <p class="text-warning"><strong><%= review.user_name %></strong> (<%= review.user_email %>)</p>
+      <p class="text-light"><%= review.review %></p>
+    </div>
+  <% end %> <%# Correct closing each statement %>
+<% else %>
+  <p class="text-muted">No reviews yet.</p>
+<% end %> <%# Correct closing if statement %>
+
+  <%= link_to 'Back to List', api_entries_path, class: 'btn btn-secondary mt-3' %>
+</div>
+

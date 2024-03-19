@@ -1,0 +1,89 @@
+<div class="container text-light bg-dark mt-5 p-5 rounded">
+  <h1 class="display-4">About Us</h1>
+  <p>This is the about page for our application. Here you can find information about the data sources we use and the purpose of this application.</p>
+
+  <h2>Description of Datasets</h2>
+
+  <div class="mt-3">
+    <h3>Public APIs Data:</h3>
+    <ul class="list-unstyled">
+      <li>Source: Data from the <a href="https://api.publicapis.org/entries" class="text-info">https://api.publicapis.org/entries</a> endpoint, which lists publicly available APIs.</li>
+      <li>Data Structure: Each API entry includes details such as API name, description, Auth type, HTTPS support, CORS, the link to the API, and its category.</li>
+    </ul>
+  </div>
+
+  <div class="mt-3">
+    <h3>Database:</h3>
+    <ul class="list-unstyled">
+      <li>Tables:
+        <ul>
+          <li>Categories
+            <ul>
+              <li>Columns:
+                <ul>
+                  <li>id (PK)</li>
+                  <li>name</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>ApiEntries
+            <ul>
+              <li>Columns:
+                <ul>
+                  <li>id (PK)</li>
+                  <li>api_name</li>
+                  <li>description</li>
+                  <li>auth</li>
+                  <li>https</li>
+                  <li>cors</li>
+                  <li>link</li>
+                  <li>category_id (FK to Categories.id)</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mt-3">
+    <h3>Faker API Data (User Feedbacks):</h3>
+    <ul class="list-unstyled">
+      <li>Source: Simulated data generated using Faker libraries to represent user feedback on the use of the various APIs listed in the Public APIs data.</li>
+      <li>Data Structure: Each record simulates feedback from a user, including the user's name, email, and their review text.</li>
+      <li>Database Requirements:
+        <ul>
+          <li>Table: FakerDatas
+            <ul>
+              <li>Columns:
+                <ul>
+                  <li>id</li>
+                  <li>api_entry_id</li>
+                  <li>user_name</li>
+                  <li>user_email</li>
+                  <li>review</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <p class="mt-3">Integration Plan: The integration between the datasets from Public APIs and Faker API is centered around the use of the APIs. ApiEntries from the Public APIs data can have multiple FakerDatas records associated with them, representing user feedback for each API. This establishes a one-to-many relationship between ApiEntries and FakerDatas.</p>
+
+  <div class="mt-3">
+    <h3>Relationships:</h3>
+    <ul class="list-unstyled">
+      <li>A Category can have multiple ApiEntries (one-to-many).</li>
+      <li>An ApiEntry can have multiple FakerDatas (one-to-many).</li>
+    </ul>
+  </div>
+  <div class="mt-3">
+    <h3>ERR Diagram:</h3>
+    <img src="<%= asset_path('errdia.png') %>" alt="ERD Diagram" class="img-fluid">
+  </div>
+</div>

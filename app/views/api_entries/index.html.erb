@@ -1,0 +1,49 @@
+<div class="container-fluid bg-dark p-3 rounded"> 
+  <div class="table-responsive"> 
+    <%= form_with(url: api_entries_path, method: :get, local: true) do |form| %>
+      <div class="form-group">
+        <%= form.label :search, class: 'text-light' %>
+        <%= form.text_field :search, value: params[:search], class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :category_id, "Category", class: 'text-light' %>
+        <%= collection_select(:api_entry, :category_id, Category.all, :id, :name, {include_blank: true}, {class: "form-control"}) %>
+      </div>
+      <%= form.submit "Search", class: 'btn btn-info' %>
+    <% end %>
+
+    <% if @api_entries.empty? %>
+      <div class="alert alert-warning" role="alert">
+        No API entries found. Please try a different search query or category.
+      </div>
+    <% else %>
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">API Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Link</th>
+            <th scope="col">Auth</th>
+            <th scope="col">HTTPs</th>
+            <th scope="col">Category</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @api_entries.each do |entry| %>
+            <tr>
+              <td><%= entry.api_name %></td>
+              <td><%= entry.description %></td>
+              <td><%= entry.link %></td>
+              <td><%= entry.auth ? 'Yes' : 'No' %></td>
+              <td><%= entry.https ? 'Yes' : 'No' %></td>
+              <td><%= entry.category.name %></td>
+              <td><%= link_to 'View', api_entry_path(entry), class: 'btn btn-primary' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @api_entries %>
+    <% end %>
+  </div>
+</div>
